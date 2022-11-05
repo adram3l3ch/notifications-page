@@ -20,7 +20,10 @@ const Notification = (props: NotificationProps) => {
 
 	return (
 		<div className={`${showAnimation ? "new-notification" : ""}`}>
-			<article className="notification" ref={notificationRef}>
+			<article
+				className={`notification ${isNew ? "new" : ""} ${imageNotification ? "picture" : ""}`}
+				ref={notificationRef}
+			>
 				<h2 className="sr-only">{`${name} ${notification}`}</h2>
 				<img src={image} alt="avatar" />
 				<div className="notification__details">

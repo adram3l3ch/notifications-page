@@ -1,6 +1,6 @@
 .notifications {
 	background-color: $white;
-	width: min(800px, 100%);
+	width: min(750px, 100%);
 	padding: #{$s4}rem;
 	border-radius: #{$s1}rem;
 	max-height: 100%;
@@ -62,8 +62,19 @@
 	&:has(.new) {
 		background-color: $primary-800;
 	}
+	&.new {
+		background-color: $primary-800;
+	}
 
 	&:has(.picture) {
+		grid-template-columns: #{$s6}rem 1fr #{$s6}rem;
+
+		.picture {
+			grid-column: 3 / 4;
+		}
+	}
+
+	&.picture {
 		grid-template-columns: #{$s6}rem 1fr #{$s6}rem;
 
 		.picture {
