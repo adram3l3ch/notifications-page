@@ -41,6 +41,7 @@ const Notifications = () => {
 				<p onClick={markAllAsRead}>Mark all as read</p>
 			</header>
 			<section className="notifications__list customScrollBar">
+				<h2 className="sr-only">Notifications List</h2>
 				{notifications.map(notification => (
 					<Notification {...notification} key={notification.id} />
 				))}
