@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { NotificationProps } from "./types";
 
 const Message = ({ message }: { message: string }) => {
@@ -5,29 +6,41 @@ const Message = ({ message }: { message: string }) => {
 };
 
 const Notification = (props: NotificationProps) => {
-	const { image, name, notification, time, isMessage, isNew, imageNotification } = props;
+	const { image, name, notification, time, isMessage, isNew, imageNotification, showAnimation } = props;
 	const neitherMessageNorImage = !isMessage && !imageNotification;
+
+	const notificationRef = useRef<null | HTMLElement>(null);
+
+	useEffect(() => {
+		if (notificationRef.current) {
+			const { height } = notificationRef.current.getBoundingClientRect();
+			notificationRef.current.parentElement?.style.setProperty("--height", `${height}px`);
+		}
+	}, [notificationRef.current]);
+
 	return (
-		<article className="notification">
-			<img src={image} alt="avatar" />
-			<div className="notification__details">
-				<header>
-					<p>
-						<span className="name">{name} </span>
-						{notification}{" "}
-						{neitherMessageNorImage && (
-							<span className={`action ${props.isSpecial ? "special" : ""}`}>
-								{props.action}
-							</span>
-						)}
-					</p>
-					{isNew && <div className="new" />}
-				</header>
-				<p className="time">{time}</p>
-			</div>
-			{imageNotification && <img className="picture" src={props.picture} />}
-			{isMessage && <Message message={props.message} />}
-		</article>
+		<div className={`${showAnimation ? "new-notification" : ""}`}>
+			<article className="notification" ref={notificationRef}>
+				<img src={image} alt="avatar" />
+				<div className="notification__details">
+					<header>
+						<p>
+							<span className="name">{name} </span>
+							{notification}{" "}
+							{neitherMessageNorImage && (
+								<span className={`action ${props.isSpecial ? "special" : ""}`}>
+									{props.action}
+								</span>
+							)}
+						</p>
+						{isNew && <div className="new" />}
+					</header>
+					<p className="time">{time}</p>
+				</div>
+				{imageNotification && <img className="picture" src={props.picture} />}
+				{isMessage && <Message message={props.message} />}
+			</article>
+		</div>
 	);
 };
 

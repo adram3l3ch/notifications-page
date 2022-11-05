@@ -23,6 +23,8 @@ export type CommonProps = {
 	time: string;
 	notification: string;
 	isNew?: boolean;
+	showAnimation?: true;
+	id: number;
 };
 
 export type NotificationProps =

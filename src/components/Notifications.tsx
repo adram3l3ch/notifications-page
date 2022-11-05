@@ -1,51 +1,49 @@
 import Notification from "./Notification";
 import data from "../data";
+import { useCallback, useState } from "react";
+
+let timeout: number;
 
 const Notifications = () => {
-	const newMessagesCount = data.filter(n => n.isNew).length;
+	const [notifications, setNotifications] = useState(data);
+	const newMessagesCount = notifications.filter(n => n.isNew).length;
+	const [addingNotifications, setAddingNotifications] = useState(false);
+	const markAllAsRead = () => {
+		setNotifications(n => n.map(n => ({ ...n, isNew: false })));
+	};
+	const addNotification = useCallback(() => {
+		const randomNotification = data[Math.floor(Math.random() * data.length)];
+		setNotifications(n => [
+			{ ...randomNotification, showAnimation: true, id: n.length + 1, isNew: true },
+			...n,
+		]);
+		timeout = setTimeout(addNotification, 5000);
+	}, [data]);
+
+	const handleClick = () => {
+		if (addingNotifications) {
+			setAddingNotifications(false);
+			clearTimeout(timeout);
+		} else {
+			setAddingNotifications(true);
+			addNotification();
+		}
+	};
+
 	return (
 		<div className="notifications">
+			<button onClick={handleClick}>
+				{addingNotifications ? "Cancel Animation" : "Start Animation"}
+			</button>
 			<header>
 				<h1>Notifications</h1>
-				{newMessagesCount && <span>{newMessagesCount}</span>}
-				<p>Mark all as read</p>
+				{!!newMessagesCount && <span>{newMessagesCount}</span>}
+				<p onClick={markAllAsRead}>Mark all as read</p>
 			</header>
-			<section className="notifications__list">
-				{data.map((notification, i) => (
-					<Notification key={i} {...notification} />
+			<section className="notifications__list customScrollBar">
+				{notifications.map(notification => (
+					<Notification {...notification} key={notification.id} />
 				))}
-				{/* <Notification
-					name="Mark Webber"
-					notification="reacted to your recent post"
-					action="My first tournament today!"
-					image={image}
-					time="1m ago"
-					isNew={true}
-				/>
-				<Notification
-					name="Angela Gray"
-					notification="followed you"
-					image={image}
-					time="5m ago"
-					isNew={true}
-				/>
-				<Notification
-					name="Rizky Hasanuddin"
-					notification="sent you a private message"
-					image={image}
-					time="5 days ago"
-					isMessage={true}
-					message=" Hello, thanks for setting up the Chess Club. I've been a member for a few weeks now and 
-					I'm already having lots of fun and improving my game."
-				/>
-				<Notification
-					name="Angela Gray"
-					notification="followed you"
-					image={image}
-					imageNotification={true}
-					time="5m ago"
-					picture={image2}
-				/> */}
 			</section>
 		</div>
 	);
