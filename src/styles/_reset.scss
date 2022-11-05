@@ -74,3 +74,10 @@ button {
 	border: none;
 	outline: none;
 }
+
+.sr-only {
+	position: absolute;
+	visibility: hidden;
+	left: -1000vmax;
+	top: -1000vmax;
+}

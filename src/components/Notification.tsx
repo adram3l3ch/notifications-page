@@ -21,6 +21,7 @@ const Notification = (props: NotificationProps) => {
 	return (
 		<div className={`${showAnimation ? "new-notification" : ""}`}>
 			<article className="notification" ref={notificationRef}>
+				<h2 className="sr-only">{`${name} ${notification}`}</h2>
 				<img src={image} alt="avatar" />
 				<div className="notification__details">
 					<header>
@@ -37,7 +38,9 @@ const Notification = (props: NotificationProps) => {
 					</header>
 					<p className="time">{time}</p>
 				</div>
-				{imageNotification && <img className="picture" src={props.picture} />}
+				{imageNotification && (
+					<img className="picture" src={props.picture} alt="notification image" />
+				)}
 				{isMessage && <Message message={props.message} />}
 			</article>
 		</div>

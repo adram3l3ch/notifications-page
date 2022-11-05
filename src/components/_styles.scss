@@ -76,7 +76,7 @@
 		aspect-ratio: 1;
 	}
 
-	:nth-child(n + 2):not(.picture) {
+	:nth-child(n + 3):not(.picture) {
 		grid-column: 2 / 3;
 	}
 }
