@@ -8,10 +8,28 @@
 
 :root {
 	font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
-	color-scheme: light dark;
 	font-synthesis: none;
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-text-size-adjust: 100%;
+}
+
+.App {
+	background-color: $primary-500;
+	padding: #{$s6}rem;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+h1 {
+	color: $primary-100;
+}
+
+p {
+	color: $primary-400;
+	line-height: #{$s3}em;
+	font-weight: $f-normal;
 }
