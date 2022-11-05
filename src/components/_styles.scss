@@ -45,16 +45,26 @@
 	display: grid;
 	grid-template-columns: #{$s5}rem 1fr;
 	gap: #{$s2}rem;
-	background-color: $primary-500;
 	padding: #{$s2}rem;
 	border-radius: #{$s1}rem;
+	&:has(.new) {
+		background-color: $primary-500;
+	}
+
+	&:has(.picture) {
+		grid-template-columns: #{$s5}rem 1fr #{$s5}rem;
+
+		.picture {
+			grid-column: 3 / 4;
+		}
+	}
 
 	img {
 		width: 100%;
 		aspect-ratio: 1;
 	}
 
-	:nth-child(n + 2) {
+	:nth-child(n + 2):not(.picture) {
 		grid-column: 2 / 3;
 	}
 
@@ -70,7 +80,7 @@
 		}
 
 		.new {
-			width: 5px;
+			width: 7px;
 			aspect-ratio: 1;
 			background-color: $secondary;
 			display: inline-block;
@@ -81,9 +91,15 @@
 		.action {
 			font-weight: $f-bold;
 
-			&.group {
+			&.special {
 				color: $primary;
 			}
 		}
 	}
+}
+
+.message {
+	padding: #{$s2}rem;
+	border: 1px solid;
+	border-radius: #{$s0}rem;
 }

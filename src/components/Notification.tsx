@@ -1,19 +1,32 @@
-import image from "../assets/images/avatar-angela-gray.webp";
+import { NotificationProps } from "./types";
 
-const Notification = () => {
+const Message = ({ message }: { message: string }) => {
+	return <p className="message">{message}</p>;
+};
+
+const Notification = (props: NotificationProps) => {
+	const { image, name, notification, time, isMessage, isNew, imageNotification } = props;
+	const neitherMessageNorImage = !isMessage && !imageNotification;
 	return (
 		<article className="notification">
 			<img src={image} alt="avatar" />
 			<div className="notification__details">
 				<header>
 					<p>
-						<span className="name">Mark Webber</span> reacted to your recent post{" "}
-						<span className="action">My first tournament today!</span>
+						<span className="name">{name} </span>
+						{notification}{" "}
+						{neitherMessageNorImage && (
+							<span className={`action ${props.isSpecial ? "special" : ""}`}>
+								{props.action}
+							</span>
+						)}
 					</p>
-					<div className="new" />
+					{isNew && <div className="new" />}
 				</header>
-				<p className="time">1m ago</p>
+				<p className="time">{time}</p>
 			</div>
+			{imageNotification && <img className="picture" src={props.picture} />}
+			{isMessage && <Message message={props.message} />}
 		</article>
 	);
 };
