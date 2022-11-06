@@ -12,7 +12,8 @@ const Notifications = () => {
 		setNotifications(n => n.map(n => ({ ...n, isNew: false })));
 	};
 	const addNotification = useCallback(() => {
-		const randomNotification = data[Math.floor(Math.random() * data.length)];
+		const randomIndex = Math.floor(Math.random() * data.length);
+		const randomNotification = data[randomIndex];
 		setNotifications(n => [
 			{ ...randomNotification, showAnimation: true, id: n.length + 1, isNew: true },
 			...n,

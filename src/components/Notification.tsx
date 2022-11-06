@@ -18,27 +18,29 @@ const Notification = (props: NotificationProps) => {
 		}
 	}, [notificationRef.current]);
 
+	const wrapperDivClass = `${showAnimation ? "new-notification" : ""}`;
+	const articleClass = `notification ${isNew ? "new" : ""} ${imageNotification ? "picture" : ""}`;
+
+	const Header = () => (
+		<header>
+			<p>
+				<span className="name">{name} </span>
+				{notification}{" "}
+				{neitherMessageNorImage && (
+					<span className={`action ${props.isSpecial ? "special" : ""}`}>{props.action}</span>
+				)}
+			</p>
+			{isNew && <div className="new" />}
+		</header>
+	);
+
 	return (
-		<div className={`${showAnimation ? "new-notification" : ""}`}>
-			<article
-				className={`notification ${isNew ? "new" : ""} ${imageNotification ? "picture" : ""}`}
-				ref={notificationRef}
-			>
+		<div className={wrapperDivClass}>
+			<article className={articleClass} ref={notificationRef}>
 				<h2 className="sr-only">{`${name} ${notification}`}</h2>
 				<img src={image} alt="avatar" />
 				<div className="notification__details">
-					<header>
-						<p>
-							<span className="name">{name} </span>
-							{notification}{" "}
-							{neitherMessageNorImage && (
-								<span className={`action ${props.isSpecial ? "special" : ""}`}>
-									{props.action}
-								</span>
-							)}
-						</p>
-						{isNew && <div className="new" />}
-					</header>
+					<Header />
 					<p className="time">{time}</p>
 				</div>
 				{imageNotification && (
